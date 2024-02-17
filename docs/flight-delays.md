@@ -2,35 +2,27 @@
 title: Flight Delays
 ---
 
+```js
+import { vgplot, url } from "./components/mosaic.js";
+const vg = vgplot([
+  vg => vg.loadParquet("flights", url("data/flights-200k.parquet"))
+]);
+```
+
+
 # Flight Delays
 
-```js
-import * as vgplot from "npm:@uwdata/vgplot";
+What contributes to delayed airline flights? Let's examine a sample of over 200,000 flight records provided by the [U.S. DOT Bureau of Transportation Statistics](https://www.transtats.bts.gov/ontime/).
 
-function url(path) {
-  // const p = await FileAttachment("data/flights-200k.parquet").url();
-  // const u = new URL(p, window.location).toString();
-  // console.error(u);
-
-  // const p = await FileAttachment("data/flights-200k.parquet").url();
-  const u = new URL('_file/' + path, window.location).toString();
-  console.error(u);
-
-  return u;
-}
-
-const vg = await (async () => {
-  const coord = vgplot.coordinator();
-  coord.databaseConnector(await vgplot.wasmConnector());
-  await coord.exec(
-    vgplot.loadParquet("flights", url("data/flights-200k.parquet")));
-  return vgplot;
-})();
-```
+We use [Mosaic vgplot](https://uwdata.github.io/mosaic/) to create scalable, interactive visualizations. Mosaic loads data from a Parquet file into DuckDB-WASM, running in the browser. Mosaic queries the database to transform data as part of the visualization process.
 
 ## Cross-Filtered Histograms
 
+The histograms below visualize the arrival delay, departure time, and distance flown. Select a region in any histogram to cross-filter the charts.
+_How are time and/or distance predictive of a flight being late? What is predictive of a flight being early?_
+
 ```js
+// a selection instance to manage selected intervals from each plot
 const $brush = vg.Selection.crossfilter();
 ```
 
@@ -72,17 +64,26 @@ vg.vconcat(
 )
 ```
 
-## Density
+When a selection changes, we need to filter the data and recount the number of records in each bin. The Mosaic system analyzes these queries and automatically optimizes updates by building indexes of pre-aggregated data ("data cubes") in the database, binned at the level of input pixels for the currently active view.
+
+While 200,000 points will stress many web-based visualization tools, Mosaic doesn't break a sweat. Now go ahead and try this with [10 million records](https://uwdata.github.io/mosaic/examples/flights-10m.html)!
+
+
+## Density Hexbins
+
+The histograms above provide a useful first-look at the data. However, to discover relations among the data we had to interactively explore. Instead of "hiding" patterns behind interactions, let's visualize relationships directly.
+
+Below we use hexagonal bins to visualize the density (number of flights) by both by time of delay and arrival delay. Interactive histograms along the edges show marginal distributions for both.
 
 ```js
-const $scale = vg.Selection.intersect();
-const $query = vg.Selection.intersect();
+const $scale = vg.Param.value("log");    // color scale type
+const $query = vg.Selection.intersect(); // interval ranges
 ```
 
 ```js
 vg.vconcat(
   vg.hconcat(
-    vg.menu({ label: "Color Scale", as: $scale, options: ["log","linear","sqrt"] }),
+    vg.menu({ label: "Color Scale", as: $scale, options: ["log", "linear", "sqrt"] }),
     vg.hspace(20),
     vg.colorLegend({ for: "hexbins" })
   ),
@@ -138,18 +139,29 @@ vg.vconcat(
 )
 ```
 
-## Density Raster
+We can see right away that flights are more likely to be delayed if they leave later in the day. Delays may accrue as a single plane flies from airport to airport.
+
+As the number of flight records in a hexbin vary across multiple orders of magnitude, we default to using a logarithmic scale. _Try adjusting the color scale menu to see the effects of different choices._
+
+## Density Rasters
+
+For finer-grained detail, we can instead bin down to the level of individual pixels.
+
+```js
+const $filter = vg.Selection.crossfilter(); // interval ranges
+```
 
 ```js
 vg.hconcat(
   vg.plot(
     vg.raster(
-      vg.from("flights"),
+      vg.from("flights", { filterBy: $filter }),
       {
         x: "time", y: "delay", fill: "density",
         bandwidth: 0, binWidth: 1, binType: "normal"
       }
     ),
+    vg.intervalX({ as: $filter, brush: {fill: "none", stroke: "#888"} }),
     vg.colorScheme("blues"),
     vg.colorScale("symlog"),
     vg.xZero(true),
@@ -160,12 +172,13 @@ vg.hconcat(
   vg.hspace(10),
   vg.plot(
     vg.raster(
-      vg.from("flights"),
+      vg.from("flights", { filterBy: $filter }),
       {
         x: "distance", y: "delay", fill: "density",
         bandwidth: 0, binWidth: 1, binType: "normal"
       }
     ),
+    vg.intervalX({ as: $filter, brush: {fill: "none", stroke: "#888"} }),
     vg.colorScheme("blues"),
     vg.colorScale("symlog"),
     vg.xyDomain(vg.Fixed),
@@ -174,3 +187,5 @@ vg.hconcat(
   )
 )
 ```
+
+ The result is a raster, or heatmap, view. We can now see some striping, which reveals that the data values were truncated to a limited precision. As before, we can also use interactive selections to cross-filter the charts.
