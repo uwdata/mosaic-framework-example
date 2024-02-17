@@ -1,18 +1,17 @@
 import * as vg from "npm:@uwdata/vgplot@0.5.0";
 
-export function url(path) {
-  const u = new URL('_file/' + path, window.location).toString();
-  console.error(u);
-  return u;
+export function url(file) {
+  const url = new URL(file, window.location);
+  console.log('??', url);
+  return `${url}`;
 }
 
 export async function vgplot(queries) {
   const mc = vg.coordinator();
-  console.log('CREATING A NEW API CONTEXT');
   const api = vg.createAPIContext({ coordinator: mc });
   mc.databaseConnector(vg.wasmConnector());
-  if (queries?.length) {
-    await mc.exec(queries.map(q => q(api)));
+  if (queries) {
+    await mc.exec(queries(api));
   }
   return api;
 }

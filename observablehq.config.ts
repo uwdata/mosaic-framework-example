@@ -16,13 +16,11 @@ export default {
   //   }
   // ],
 
-  pages: [],
-
   // Some additional configuration options and their defaults:
   // theme: "default", // try "light", "dark", "slate", etc.
   // header: "", // what to show in the header (HTML)
   footer: "", // what to show in the footer (HTML)
-  toc: false, // whether to show the table of contents
+  toc: true, // whether to show the table of contents
   pager: false, // whether to show previous & next links in the footer
   // root: "docs", // path to the source root for preview
   // output: "dist", // path to the output root for build

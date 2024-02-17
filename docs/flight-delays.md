@@ -4,11 +4,9 @@ title: Flight Delays
 
 ```js
 import { vgplot, url } from "./components/mosaic.js";
-const vg = vgplot([
-  vg => vg.loadParquet("flights", url("data/flights-200k.parquet"))
-]);
+const flights = await FileAttachment("data/flights-200k.parquet").url();
+const vg = vgplot(vg => [ vg.loadParquet("flights", url(flights)) ]);
 ```
-
 
 # Flight Delays
 
