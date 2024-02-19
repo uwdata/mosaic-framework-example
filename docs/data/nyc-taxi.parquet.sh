@@ -1,5 +1,7 @@
 # The DuckDB executable must be on your environment path!
 # Use DuckDB version 0.9.2 or later
+# Write to a named file as portable file descriptors such as
+# (/dev/stdout) appear to be unavailable in GitHub actions.
 duckdb :memory: << EOF
 -- Load spatial extension
 INSTALL spatial; LOAD spatial;
@@ -16,6 +18,11 @@ COPY (SELECT
   (HOUR(datetime) + MINUTE(datetime)/60) AS time,
   ST_X(pick)::INTEGER AS px, ST_Y(pick)::INTEGER AS py,
   ST_X(drop)::INTEGER AS dx, ST_Y(drop)::INTEGER AS dy
-FROM rides) TO '/proc/$$/fd/1' WITH (FORMAT PARQUET);
+FROM rides) TO 'trips.parquet' WITH (FORMAT PARQUET);
 EOF
-exit 0
+
+# Write output to stdout
+cat trips.parquet >&1
+
+# Clean up
+rm trips.parquet
