@@ -24,9 +24,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - uses: opt-nc/setup-duckdb-action@v1.0.0
-        with:
-          version: v0.10.0
+      - name: Install DuckDB CLI
+        run: |
+          wget https://github.com/duckdb/duckdb/releases/download/v0.10.0/duckdb_cli-linux-amd64.zip
+          unzip duckdb_cli-linux-amd64.zip
+          mkdir /opt/duckdb && mv duckdb /opt/duckdb && chmod +x /opt/duckdb/duckdb && sudo ln -s /opt/duckdb/duckdb /usr/bin/duckdb
+          rm duckdb_cli-linux-amd64.zip
 
       - uses: actions/checkout@v4
         with:
