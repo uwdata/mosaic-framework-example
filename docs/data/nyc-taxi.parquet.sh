@@ -16,6 +16,6 @@ COPY (SELECT
   (HOUR(datetime) + MINUTE(datetime)/60) AS time,
   ST_X(pick)::INTEGER AS px, ST_Y(pick)::INTEGER AS py,
   ST_X(drop)::INTEGER AS dx, ST_Y(drop)::INTEGER AS dy
-FROM rides) TO '/dev/fd/1' WITH (FORMAT PARQUET);
+FROM rides) TO '/proc/self/fd/1' WITH (FORMAT PARQUET);
 EOF
 exit 0
