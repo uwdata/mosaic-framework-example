@@ -11,8 +11,7 @@ const vg = vgplot(vg => [ vg.loadParquet("latency", url(latency)) ]);
 # Observable Web Latency
 ## Recreating a custom graphic using Mosaic vgplot
 
-The Observable Framework documentation includes a wonderful example about [Analyzing web logs](https://observablehq.com/framework/examples/api/), which looks at the latency (response time) of various routes on the Observable.com site.
-
+The Observable Framework documentation includes a wonderful example about [analyzing web logs](https://observablehq.com/framework/examples/api/), visualizing the latency (response time) of various routes on the Observable.com site.
 The marquee graphic is a pixel-level heatmap of over 7 million requests to Observable servers over the course of a week.
 The chart plots time vs. latency, where each pixel is colored according to the most common route (URL pattern) in that time and latency bin.
 
@@ -20,10 +19,10 @@ That said, a lot is going on in the original [custom heatmap component](https://
 
 - The data is pre-binned and aggregated for fast loading
 - Observable Plot and HTML Canvas code are intermixed in non-trivial ways
-- Frame-based animation is used to progressively render the graphic
+- Frame-based animation is used to progressively render the graphic, presumably to combat sluggish rendering
 
-Below we re-implement this graphic using [Mosaic vgplot](https://uwdata.github.io/mosaic/what-is-mosaic/), using a simple, standalone specification.
-We also leverage Mosaic's facilities for scalable filtering and cross-chart linking.
+Here we re-create this graphic with [Mosaic vgplot](https://uwdata.github.io/mosaic/what-is-mosaic/), using a standalone specification.
+We also leverage Mosaic's support for cross-chart linking and scalable filtering.
 
 ```js
 const $filter = vg.Selection.intersect();

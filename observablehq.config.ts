@@ -29,7 +29,7 @@ export default {
   // header: "", // what to show in the header (HTML)
   footer: `<a href="https://idl.cs.washington.edu/">Interactive Data Lab, University of Washington</a>`,
   toc: true, // whether to show the table of contents
-  pager: false, // whether to show previous & next links in the footer
+  pager: true, // whether to show previous & next links in the footer
   // root: "docs", // path to the source root for preview
   // output: "dist", // path to the output root for build
 };

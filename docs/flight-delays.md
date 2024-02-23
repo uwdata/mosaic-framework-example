@@ -35,6 +35,8 @@ vg.vconcat(
     vg.intervalX({ as: $brush }),
     vg.xDomain(vg.Fixed),
     vg.yTickFormat("s"),
+    vg.xLabel("Delay (minutes)"),
+    vg.yLabel("Number of Flights"),
     vg.width(600),
     vg.height(150)
   ),
@@ -46,6 +48,8 @@ vg.vconcat(
     vg.intervalX({ as: $brush }),
     vg.xDomain(vg.Fixed),
     vg.yTickFormat("s"),
+    vg.xLabel("Time (hour of day)"),
+    vg.yLabel("Number of Flights"),
     vg.width(600),
     vg.height(150)
   ),
@@ -57,6 +61,8 @@ vg.vconcat(
     vg.intervalX({ as: $brush }),
     vg.xDomain(vg.Fixed),
     vg.yTickFormat("s"),
+    vg.xLabel("Distance (miles)"),
+    vg.yLabel("Number of Flights"),
     vg.width(600),
     vg.height(150)
   )
@@ -98,6 +104,7 @@ vg.vconcat(
       vg.xAxis("top"),
       vg.yAxis(null),
       vg.xLabelAnchor("center"),
+      vg.xLabel("Time (hour of day)"),
       vg.width(605),
       vg.height(70)
     ),
@@ -131,6 +138,7 @@ vg.vconcat(
       vg.xAxis(null),
       vg.yAxis("right"),
       vg.yLabelAnchor("center"),
+      vg.yLabel("Delay (minutes)"),
       vg.width(80),
       vg.height(455)
     )
@@ -161,6 +169,8 @@ vg.hconcat(
     vg.colorScheme("blues"),
     vg.colorScale("symlog"),
     vg.xZero(true),
+    vg.xLabel("Time (hour of day)"),
+    vg.yLabel("Delay (minutes)"),
     vg.xyDomain(vg.Fixed),
     vg.width(315),
     vg.height(300)
@@ -174,6 +184,9 @@ vg.hconcat(
     vg.intervalX({ as: $filter, brush: {fill: "none", stroke: "#888"} }),
     vg.colorScheme("blues"),
     vg.colorScale("symlog"),
+    vg.xScale("log"),
+    vg.xLabel("Distance (miles, log scale)"),
+    vg.yLabel("Delay (minutes)"),
     vg.xyDomain(vg.Fixed),
     vg.width(315),
     vg.height(300)
