@@ -154,10 +154,7 @@ vg.hconcat(
   vg.plot(
     vg.raster(
       vg.from("flights", { filterBy: $filter }),
-      {
-        x: "time", y: "delay", fill: "density",
-        bandwidth: 0, binWidth: 1, binType: "normal"
-      }
+      { x: "time", y: "delay", fill: "density" }
     ),
     vg.intervalX({ as: $filter, brush: {fill: "none", stroke: "#888"} }),
     vg.colorScheme("blues"),
@@ -171,10 +168,7 @@ vg.hconcat(
   vg.plot(
     vg.raster(
       vg.from("flights", { filterBy: $filter }),
-      {
-        x: "distance", y: "delay", fill: "density",
-        bandwidth: 0, binWidth: 1, binType: "normal"
-      }
+      { x: "distance", y: "delay", fill: "density" }
     ),
     vg.intervalX({ as: $filter, brush: {fill: "none", stroke: "#888"} }),
     vg.colorScheme("blues"),
@@ -186,4 +180,6 @@ vg.hconcat(
 )
 ```
 
- The result is a raster, or heatmap, view. We can now see some striping, which reveals that the data values were truncated to a limited precision. As before, we can also use interactive selections to cross-filter the charts.
+ The result is a raster, or heatmap, view.
+ We can now see some striping, which reveals that data values are truncated to a limited precision.
+ As before, we can also use interactive selections to cross-filter the charts.
