@@ -11,7 +11,7 @@ const vg = vgplot(vg => [ vg.loadParquet("trips", url(trips)) ]);
 # NYC Taxi Rides
 ## Pickup and dropoff points for 1M NYC taxi rides on Jan 1-3, 2010.
 
-In a data loader, we ingest a remote file into DuckDB and project [_longitude_, _latitude_] coordinates (in the database!) to spatial positions with units of 12 inch feet.
+Using a data loader, we ingest a remote file into DuckDB and project [_longitude_, _latitude_] coordinates (in the database!) to spatial positions with units of 12 inch feet.
 We then load the prepared data to visualize taxi pickup and dropoff locations, as well as the volume of rides by the time of day.
 
 _Please wait a few seconds for the dataset to load._
