@@ -9,6 +9,7 @@ const vg = vgplot(vg => [ vg.loadParquet("flights", url(flights)) ]);
 ```
 
 # Flight Delays
+## Interactive exploration of large-scale transportation data
 
 What contributes to delayed airline flights? Let's examine a sample of over 200,000 flight records provided by the [U.S. DOT Bureau of Transportation Statistics](https://www.transtats.bts.gov/ontime/).
 

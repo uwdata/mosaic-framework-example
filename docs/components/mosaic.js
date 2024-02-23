@@ -1,9 +1,4 @@
-import * as vg from "npm:@uwdata/vgplot@0.6.0";
-
-export function url(file) {
-  const url = new URL(file, window.location);
-  return `${url}`;
-}
+import * as vg from "npm:@uwdata/vgplot";
 
 export async function vgplot(queries) {
   const mc = vg.coordinator();
@@ -13,4 +8,8 @@ export async function vgplot(queries) {
     await mc.exec(queries(api));
   }
   return api;
+}
+
+export function url(file) {
+  return `${new URL(file, window.location)}`;
 }

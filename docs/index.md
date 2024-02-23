@@ -1,18 +1,86 @@
+---
+title: Mosaic + Framework Examples
+---
+
 # Mosaic + Framework Examples
+## Using Mosaic and DuckDB in Observable Framework
 
-[Mosaic](https://uwdata.github.io/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.
+```js
+import { vgplot, url } from "./components/mosaic.js";
+const weather = await FileAttachment("data/seattle-weather.parquet").url();
+const vg = vgplot(vg => [ vg.loadParquet("weather", url(weather)) ]);
+```
 
-A key idea is that interface elements (Mosaic _clients_) publish their data needs as queries that are managed by a central _coordinator_. The coordinator may further optimize queries before issuing them to a backing _data source_ such as [DuckDB](https://duckdb.org/).
+This site shares examples of integrating Mosaic and DuckDB data loaders into Observable Framework. All source markup and code is available at <https://github.com/uwdata/mosaic-framework-example>.
 
-This site shares examples of integrating Mosaic and DuckDB data loaders into Observable Framework. Source code is available at <https://github.com/uwdata/mosaic-framework-example>.
+[Mosaic](https://uwdata.github.io/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database ([DuckDB](https://duckdb.org/)) for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.
 
-## Example Data Apps
+Here is a simple example, an interactive dashboard of weather in Seattle:
 
-- [Flight Delays](/flight-delays) - explore over 200,000 flight records
-- [NYC Taxi Rides](/nyc-taxi-rides) - load and visualize 1M NYC taxi cab rides
-- [Observable Latency](/observable-latency) - a dense view of over 7M web requests
+```js
+const $click = vg.Selection.single();
+const $domain = vg.Param.array(["sun", "fog", "drizzle", "rain", "snow"]);
+const $colors = vg.Param.array(["#e7ba52", "#a7a7a7", "#aec7e8", "#1f77b4", "#9467bd"]);
+const $range = vg.Selection.intersect();
+```
+
+```js
+vg.vconcat(
+  vg.hconcat(
+    vg.plot(
+      vg.dot(
+        vg.from("weather", {filterBy: $click}),
+        {
+          x: vg.dateMonthDay("date"),
+          y: "temp_max",
+          fill: "weather",
+          r: "precipitation",
+          fillOpacity: 0.7
+        }
+      ),
+      vg.intervalX({as: $range, brush: {fill: "none", stroke: "#888"}}),
+      vg.highlight({by: $range, fill: "#ccc", fillOpacity: 0.2}),
+      vg.colorLegend({as: $click, columns: 1}),
+      vg.xyDomain(vg.Fixed),
+      vg.xTickFormat("%b"),
+      vg.colorDomain($domain),
+      vg.colorRange($colors),
+      vg.rDomain(vg.Fixed),
+      vg.rRange([2, 10]),
+      vg.width(680),
+      vg.height(300)
+    )
+  ),
+  vg.plot(
+    vg.barX(
+      vg.from("weather"),
+      {x: vg.count(), y: "weather", fill: "#ccc", fillOpacity: 0.2}
+    ),
+    vg.barX(
+      vg.from("weather", {filterBy: $range}),
+      {x: vg.count(), y: "weather", fill: "weather"}
+    ),
+    vg.toggleY({as: $click}),
+    vg.highlight({by: $click}),
+    vg.xDomain(vg.Fixed),
+    vg.yDomain($domain),
+    vg.yLabel(null),
+    vg.colorDomain($domain),
+    vg.colorRange($colors),
+    vg.width(680)
+  )
+)
+```
+
+A key idea is that interface elements (Mosaic _clients_) publish their data needs as queries that are managed by a central _coordinator_. The coordinator may further optimize queries before issuing them to a backing _data source_ like DuckDB.
+
+## Example Articles
+
+- [Flight Delays](flight-delays) - explore over 200,000 flight records
+- [NYC Taxi Rides](nyc-taxi-rides) - load and visualize 1M NYC taxi cab rides
+- [Observable Web Latency](observable-latency) - re-visiting a view of over 7M web requests
 
 ## Implementation Notes
 
-- _Using DuckDB in data loaders and GitHub Actions_
-- _Using Mosaic + DuckDB-WASM in Observable Framework_
+- [Using DuckDB in Data Loaders and GitHub Actions](data-loading)
+- [Using Mosaic + DuckDB-WASM in Observable Framework](mosaic-duckdb-wasm)
