@@ -11,7 +11,13 @@ const weather = await FileAttachment("data/seattle-weather.parquet").url();
 const vg = vgplot(vg => [ vg.loadParquet("weather", url(weather)) ]);
 ```
 
-This site shares examples of integrating Mosaic and DuckDB data loaders into Observable Framework. All source markup and code is available at <https://github.com/uwdata/mosaic-framework-example>.
+This site shares examples of integrating Mosaic and DuckDB into Observable Framework. The examples demonstrate:
+
+- Visualization and real-time interaction with massive data sets
+- Using Mosaic and DuckDB-WASM within Framework pages
+- Using DuckDB in a data loader and in GitHub Actions
+
+All source markup and code is available at <https://github.com/uwdata/mosaic-framework-example>.
 
 [Mosaic](https://uwdata.github.io/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database ([DuckDB](https://duckdb.org/)) for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.
 
@@ -71,8 +77,6 @@ vg.vconcat(
   )
 )
 ```
-
-A key idea is that interface elements (Mosaic _clients_) publish their data needs as queries that are managed by a central _coordinator_. The coordinator may further optimize queries before issuing them to a backing _data source_ like DuckDB.
 
 ## Example Articles
 
