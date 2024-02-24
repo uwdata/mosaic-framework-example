@@ -8,9 +8,9 @@ This page provides guidance for using DuckDB in Observable Framework data loader
 
 ## Using DuckDB in Data Loaders
 
-The [NYC Taxi Rides](nyc-taxi-rides) example uses a [data loader](https://observablehq.com/framework/loaders) to perform data preparation, generating pre-projected data and writing it to a Parquet file.
+The [NYC Taxi Rides](nyc-taxi-rides) and [Gaia Star Catalog](gaia-star-catalog) examples use [data loaders](https://observablehq.com/framework/loaders) to perform data preparation, generating pre-projected data and writing it to a Parquet file.
 
-The loader below is a shell script that calls the command line interface to DuckDB.
+The shell script below loads taxi data using the command line interface to DuckDB.
 The `duckdb` executable must be on your environment path... but more on that below!
 
 ```sh

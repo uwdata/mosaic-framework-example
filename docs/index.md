@@ -80,8 +80,9 @@ vg.vconcat(
 
 ## Example Articles
 
-- [Flight Delays](flight-delays) - explore over 200,000 flight records
+- [Flight Delays](flight-delays) - examine over 200,000 flight records
 - [NYC Taxi Rides](nyc-taxi-rides) - load and visualize 1M NYC taxi cab rides
+- [Gaia Star Catalog](gaia-star-catalog) - explore a 5M star sample of the 1.8B star catalog
 - [Observable Web Latency](observable-latency) - re-visiting a view of over 7M web requests
 
 ## Implementation Notes

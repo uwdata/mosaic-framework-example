@@ -12,6 +12,7 @@ export default {
       pages: [
         {name: "Flight Delays", path: "/flight-delays"},
         {name: "NYC Taxi Rides", path: "/nyc-taxi-rides"},
+        {name: "Gaia Star Catalog", path: "/gaia-star-catalog"},
         {name: "Observable Latency", path: "/observable-latency"},
       ]
     },
