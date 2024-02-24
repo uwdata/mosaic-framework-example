@@ -26,9 +26,10 @@ As Observable Framework needs to track which files are used, we must use its `Fi
 However, we don't actually want to load the file yet, so we instead request a URL.
 
 Finally, we invoke `vgplot(...)` to initialize Mosaic, which returns a (Promise to an) instance of the vgplot API.
-This method takes a single function as input, and should return an array of SQL queries to execute upon load.
+This method takes a single function as input, which should return an array of SQL queries to execute upon load.
 
-We use the `url()` helper method to prepare a file URL so that DuckDB can successfully load it &mdash; the url string returned by `FileAttachment(...).url()` is a _relative_ path like `./_file/data/doodads.csv`.
+We use the `url()` helper method to prepare a file URL so that DuckDB can successfully load it.
+The url string returned by `FileAttachment(...).url()` is a _relative_ path like `./_file/data/doodads.csv`.
 DuckDB will mistakenly interpret this as a file system path rather than a web URL.
 The `url()` helper produces a full URL (with `https://`, hostname, etc.), based on the location of the current page:
 
@@ -39,12 +40,12 @@ export function url(file) {
 ```
 
 The `vg` argument to the data loader callback is exactly the same API instance that is ultimately returned by `vgplot`.
-Perhaps this feels a bit circular, with `vg` provided to a callback, with the ultimate result being a reference to `vg`... why the gymnastics?
-We want to have access to the API to support data loading, using Mosaic's helper functions to install extensions and load data files.
-At the same time, we don't want to assign the _outer_ `vg` variable until data loading is complete.
-That way, downstream code that uses the API to build visualizations will not get evaluated by the Observable runtime until _after_ data loading is complete.
+Perhaps this feels a bit circular, with `vg` provided to a callback, with the ultimate result being a reference to `vg`.
+Why the gymnastics?
 
-Once `vg` is assigned, the data will be loaded, and we can use the API to create [visualizations](https://uwdata.github.io/mosaic/vgplot/),
+We want to have access to the API to support data loading, using Mosaic's helper functions to install extensions and load data files.
+At the same time, we don't want to assign the _outer_ `vg` variable until data loading is complete, ensuring downstream code that uses the API will not be evaluated by the Observable runtime until DuckDB is ready.
+Once `vg` is assigned, the data has been loaded, and we can evaluate API calls for creating [visualizations](https://uwdata.github.io/mosaic/vgplot/),
 [inputs](https://uwdata.github.io/mosaic/inputs/),
 [params](https://uwdata.github.io/mosaic/core/#params), and
 [selections](https://uwdata.github.io/mosaic/core/#selections).
