@@ -13,7 +13,7 @@ CREATE TEMP TABLE rides AS SELECT
   ST_Transform(ST_Point(dropoff_latitude, dropoff_longitude), 'EPSG:4326', 'ESRI:102718') AS drop
 FROM 'https://uwdata.github.io/mosaic-datasets/data/nyc-rides-2010.parquet';
 
--- Output parquet file to stdout
+-- Write output parquet file
 COPY (SELECT
   (HOUR(datetime) + MINUTE(datetime)/60) AS time,
   ST_X(pick)::INTEGER AS px, ST_Y(pick)::INTEGER AS py,
@@ -21,8 +21,5 @@ COPY (SELECT
 FROM rides) TO 'trips.parquet' WITH (FORMAT PARQUET);
 EOF
 
-# Write output to stdout
-cat trips.parquet >&1
-
-# Clean up
-rm trips.parquet
+cat trips.parquet >&1  # Write output to stdout
+rm trips.parquet       # Clean up
