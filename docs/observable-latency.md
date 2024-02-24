@@ -25,7 +25,8 @@ Here we re-create this graphic with [Mosaic vgplot](https://uwdata.github.io/mos
 We also leverage Mosaic's support for cross-chart linking and scalable filtering.
 
 ```js
-const $filter = vg.Selection.intersect();
+const $filter = vg.Selection.crossfilter();
+const $highlight = vg.Selection.single();
 ```
 
 ```js
@@ -43,6 +44,7 @@ vg.plot(
       imageRendering: "pixelated"
     }
   ),
+  vg.intervalXY({as: $filter}),
   vg.colorDomain(vg.Fixed),
   vg.colorScheme("observable10"),
   vg.opacityDomain([0, 25]),
@@ -63,7 +65,7 @@ vg.plot(
 ```js
 vg.plot(
   vg.barX(
-    vg.from("latency"),
+    vg.from("latency", {filterBy: $filter}),
     {
       x: vg.sum("count"),
       y: "route",
@@ -72,7 +74,9 @@ vg.plot(
     }
   ),
   vg.toggleY({as: $filter}),
-  vg.highlight({by: $filter}),
+  vg.toggleY({as: $highlight}),
+  vg.highlight({by: $highlight}),
+  vg.colorDomain(vg.Fixed),
   vg.xLabel("Routes by Total Requests"),
   vg.xTickFormat("s"),
   vg.yLabel(null),
@@ -84,7 +88,7 @@ vg.plot(
 )
 ```
 
-_Select elements in the bar chart of most-requested routes above to filter the heatmap and isolate specific patterns._
+_Select bars in the chart of most-requested routes above to filter the heatmap and isolate patterns. Or, select a range in the heatmap to show just the corresponding routes._
 
 ## Implementation Notes
 
@@ -105,6 +109,8 @@ plot:
   width: 2016
   height: 500
   imageRendering: pixelated
+- select: intervalXY
+  as: $filter
 colorDomain: Fixed
 colorScheme: observable10
 opacityDomain: [0, 25]
@@ -126,7 +132,7 @@ Key bits of the specification include:
 - Binning to a pixel grid based on `time` (_x_) and `latency` (_y_).
 - Mapping the pixel fill color to the `route` with largest request `count` per bin.
 - Mapping the pixel fill opacity to the sum of `count`s within a bin.
-- Interactive filtering using a selection (`$filter`), populated by clicking bars in the bar chart of routes. The `colorDomain: Fixed` setting ensures consistent colors; it prevents re-coloring when the data is filtered.
+- Interactive filtering using a selection (`$filter`). Setting `colorDomain: Fixed` ensures consistent colors; it prevents re-coloring when data is filtered.
 
 However, this re-creation does diverge from the original in a few ways:
 
