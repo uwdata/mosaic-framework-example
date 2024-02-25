@@ -19,7 +19,7 @@ const vg = vgplot(vg => [ vg.loadParquet("gaia", url(gaia)) ]);
 
 Here we visualize a 5M star sample.
 A raster sky map reveals our Milky Way galaxy.
-Select high parallax stars in the histogram to reveal a [Hertzsprung-Russel diagram](https://en.wikipedia.org/wiki/Hertzsprung%E2%80%93Russell_diagram) in the plot of stellar color vs. magnitude on the right.
+Select higher parallax (≥ 6) stars in the histogram to reveal a [Hertzsprung-Russel diagram](https://en.wikipedia.org/wiki/Hertzsprung%E2%80%93Russell_diagram) in the plot of stellar color vs. magnitude on the right.
 
 ```js
 const $brush = vg.Selection.crossfilter();
@@ -56,6 +56,7 @@ vg.hconcat(
         ),
         vg.intervalX({as: $brush}),
         vg.xDomain(vg.Fixed),
+        vg.xTicks(5),
         vg.yScale("sqrt"),
         vg.yGrid(true),
         vg.width(280),
@@ -69,6 +70,7 @@ vg.hconcat(
         ),
         vg.intervalX({as: $brush}),
         vg.xDomain(vg.Fixed),
+        vg.xTicks(5),
         vg.yScale("sqrt"),
         vg.yGrid(true),
         vg.width(280),
@@ -87,6 +89,7 @@ vg.hconcat(
     vg.xyDomain(vg.Fixed),
     vg.colorScale("sqrt"),
     vg.colorScheme("viridis"),
+    vg.xTicks(5),
     vg.yReverse(true),
     vg.width(320),
     vg.height(500),

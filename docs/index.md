@@ -15,17 +15,19 @@ const weather = await FileAttachment("data/seattle-weather.parquet").url();
 const vg = vgplot(vg => [ vg.loadParquet("weather", url(weather)) ]);
 ```
 
-This site shares examples of integrating Mosaic and DuckDB into Observable Framework. The examples demonstrate:
+[Mosaic](https://uwdata.github.io/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database ([DuckDB](https://duckdb.org/)) for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.
+
+This site shows how to publish Mosaic and DuckDB-powered interactive dashboards and data-driven articles using [Observable Framework](https://observablehq.com/framework/). The examples illustrate:
 
 - Visualization and real-time interaction with massive data sets
 - Using Mosaic and DuckDB-WASM within Framework pages
 - Using DuckDB in a data loader and in GitHub Actions
 
-All source markup and code is available at <https://github.com/uwdata/mosaic-framework-example>.
+All source markup and code is available at <https://github.com/uwdata/mosaic-framework-example>. Or, use the source links at the top of each page!
 
-[Mosaic](https://uwdata.github.io/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database ([DuckDB](https://duckdb.org/)) for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.
+## Example: Seattle Weather
 
-Here is a simple example, an interactive dashboard of weather in Seattle:
+Our first example is an interactive dashboard of Seattle’s weather, including temperatures, precipitation, and the type of weather. Drag on the scatter plot to see the proportion of days that have sun, fog, drizzle, rain, or snow.
 
 ```js
 const $click = vg.Selection.single();
@@ -57,7 +59,8 @@ vg.vconcat(
       vg.colorRange($colors),
       vg.rDomain(vg.Fixed),
       vg.rRange([2, 10]),
-      vg.width(680),
+      vg.marginLeft(45),
+      vg.width(660),
       vg.height(300)
     )
   ),
@@ -77,10 +80,13 @@ vg.vconcat(
     vg.yLabel(null),
     vg.colorDomain($domain),
     vg.colorRange($colors),
-    vg.width(680)
+    vg.marginLeft(45),
+    vg.width(660)
   )
 )
 ```
+
+The examples linked below involve much larger datasets and a variety of visualization types.
 
 ## Example Articles
 

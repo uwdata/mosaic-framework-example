@@ -152,11 +152,11 @@ vg.vconcat(
 
 We can see right away that flights are more likely to be delayed if they leave later in the day. Delays may accrue as a single plane flies from airport to airport.
 
-As the number of flight records in a hexbin vary across multiple orders of magnitude, we default to using a logarithmic scale. _Try adjusting the color scale menu to see the effects of different choices._
+The number of records in a hexbin vary from 0 to over 2,000, spanning multiple orders of magnitude. To see these orders more clearly, we default to a logarithmic color scale. _Try adjusting the color scale menu to see the effects of different choices._
 
-## Density Rasters
+## Density Heatmaps
 
-For finer-grained detail, we can instead bin down to the level of individual pixels.
+For finer-grained detail, we can bin all the way down to the level of individual pixels.
 
 ```js
 const $filter = vg.Selection.crossfilter(); // interval ranges
@@ -167,7 +167,7 @@ vg.hconcat(
   vg.plot(
     vg.raster(
       vg.from("flights", { filterBy: $filter }),
-      { x: "time", y: "delay", fill: "density" }
+      { x: "time", y: "delay", fill: "density", imageRendering: "pixelated" }
     ),
     vg.intervalX({ as: $filter, brush: {fill: "none", stroke: "#888"} }),
     vg.colorScheme("blues"),
@@ -183,7 +183,7 @@ vg.hconcat(
   vg.plot(
     vg.raster(
       vg.from("flights", { filterBy: $filter }),
-      { x: "distance", y: "delay", fill: "density" }
+      { x: "distance", y: "delay", fill: "density", imageRendering: "pixelated" }
     ),
     vg.intervalX({ as: $filter, brush: {fill: "none", stroke: "#888"} }),
     vg.colorScheme("blues"),
@@ -199,5 +199,5 @@ vg.hconcat(
 ```
 
  The result is a raster, or heatmap, view.
- We can now see some striping, which reveals that data values are truncated to a limited precision.
- As before, we can also use interactive selections to cross-filter the charts.
+ We now see some striping, which reveals that data values are truncated to a limited precision.
+ As before, we can use interactive selections to cross-filter the charts.

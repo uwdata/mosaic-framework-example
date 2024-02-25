@@ -8,14 +8,14 @@ header: |
 
 # Data Loading with DuckDB
 
-This page provides guidance for using DuckDB in Observable Framework data loaders, and then deploying them using GitHub Actions.
+Looking under the hood, this page provides guidance for using DuckDB in Framework data loaders and deploying it within GitHub Actions.
 
 ## Using DuckDB in Data Loaders
 
 The [NYC Taxi Rides](nyc-taxi-rides) and [Gaia Star Catalog](gaia-star-catalog) examples use [data loaders](https://observablehq.com/framework/loaders) to perform data preparation, generating pre-projected data and writing it to a Parquet file.
 
-The shell script below loads taxi data using the command line interface to DuckDB.
-The `duckdb` executable must be on your environment path... but more on that below!
+The [shell script below](https://github.com/uwdata/mosaic-framework-example/blob/main/docs/data/nyc-taxi.parquet.sh) loads taxi data using the command line interface to DuckDB.
+The `duckdb` executable must be on your environment path... we'll come back to that!
 
 ```sh
 duckdb :memory: << EOF
@@ -31,9 +31,11 @@ FROM 'https://uwdata.github.io/mosaic-datasets/data/nyc-rides-2010.parquet';
 
 -- Write output parquet file
 COPY (SELECT
-  (HOUR(datetime) + MINUTE(datetime)/60) AS time,
-  ST_X(pick)::INTEGER AS px, ST_Y(pick)::INTEGER AS py,
-  ST_X(drop)::INTEGER AS dx, ST_Y(drop)::INTEGER AS dy
+  HOUR(datetime) + MINUTE(datetime) / 60 AS time,
+  ST_X(pick)::INTEGER AS px, -- extract pickup x-coord
+  ST_Y(pick)::INTEGER AS py, -- extract pickup y-coord
+  ST_X(drop)::INTEGER AS dx, -- extract dropff x-coord
+  ST_Y(drop)::INTEGER AS dy  -- extract dropff y-coord
 FROM rides) TO 'trips.parquet' WITH (FORMAT PARQUET);
 EOF
 
@@ -73,4 +75,4 @@ steps:
       rm duckdb_cli-linux-amd64.zip
 ```
 
-We perform this step before site build steps, ensuring `duckdb` is installed and ready.
+We perform installation before the site build steps, ensuring `duckdb` is ready to go.

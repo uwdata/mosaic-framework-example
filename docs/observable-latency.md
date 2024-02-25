@@ -25,8 +25,8 @@ That said, a lot is going on in the original [custom heatmap component](https://
 - Observable Plot and HTML Canvas code are intermixed in non-trivial ways
 - Frame-based animation is used to progressively render the graphic, presumably to combat sluggish rendering
 
-Here we re-create this graphic with [Mosaic vgplot](https://uwdata.github.io/mosaic/what-is-mosaic/), using a standalone specification.
-We also leverage Mosaic's support for cross-chart linking and scalable filtering.
+Here we re-create this graphic with [Mosaic vgplot](https://uwdata.github.io/mosaic/what-is-mosaic/), resulting in a simpler, standalone specification.
+We further leverage Mosaic's support for cross-chart linking and scalable filtering for real-time updates.
 
 ```js
 const $filter = vg.Selection.crossfilter();
@@ -92,7 +92,7 @@ vg.plot(
 )
 ```
 
-_Select bars in the chart of most-requested routes above to filter the heatmap and isolate patterns. Or, select a range in the heatmap to show just the corresponding routes._
+_Select bars in the chart of most-requested routes above to filter the heatmap and isolate patterns. Or, select a range in the heatmap to show only corresponding routes._
 
 ## Implementation Notes
 
