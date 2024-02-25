@@ -1,5 +1,9 @@
 ---
 title: Gaia Star Catalog
+header: |
+  <div class="banner">
+    <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/gaia-star-catalog.md?plain=1"><span>View source ↗</span></a>
+  </div>
 ---
 
 ```js

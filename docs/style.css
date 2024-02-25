@@ -1,0 +1,26 @@
+@import url("observablehq:default.css");
+@import url("observablehq:theme-air.css");
+
+#observablehq-header .banner {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 0.5rem;
+  height: 2.2rem;
+  margin: -1.5rem -2rem 2rem -2rem;
+  padding: 0.5rem 2rem;
+  border-bottom: solid 1px var(--theme-foreground-faintest);
+  font: 500 14px var(--sans-serif);
+}
+
+#observablehq-header a[href] {
+  color: inherit;
+}
+
+#observablehq-header a[target="_blank"]:hover span {
+  text-decoration: underline;
+}
+
+#observablehq-header a[target="_blank"]:not(:hover, :focus)::after {
+  color: var(--theme-foreground-muted);
+}

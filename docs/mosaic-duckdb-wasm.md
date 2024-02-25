@@ -1,5 +1,9 @@
 ---
 title: Using Mosaic & DuckDB-WASM
+header: |
+  <div class="banner">
+    <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/mosaic-duckdb-wasm.md?plain=1"><span>View source ↗</span></a>
+  </div>
 ---
 
 # Using Mosaic & DuckDB-WASM
