@@ -82,7 +82,7 @@ While 200,000 points will stress many web-based visualization tools, Mosaic does
 
 The histograms above provide a useful first-look at the data. However, to discover relations among the data we had to interactively explore. Instead of "hiding" patterns behind interactions, let's visualize relationships directly.
 
-Below we use hexagonal bins to visualize the density (number of flights) by both by time of delay and arrival delay. Interactive histograms along the edges show marginal distributions for both.
+Below we use hexagonal bins to visualize the density (number of flights) by both time of delay and arrival delay. Interactive histograms along the edges show marginal distributions for both.
 
 ```js
 const $scale = vg.Param.value("log");    // color scale type
