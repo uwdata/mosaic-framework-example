@@ -10,9 +10,9 @@ header: |
 ## Using Mosaic and DuckDB in Observable Framework
 
 ```js
-import { vgplot, url } from "./components/mosaic.js";
+import { vgplot } from "./components/mosaic.js";
 const weather = await FileAttachment("data/seattle-weather.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("weather", url(weather)) ]);
+const vg = vgplot(vg => [ vg.loadParquet("weather", weather) ]);
 ```
 
 [Mosaic](https://uwdata.github.io/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database ([DuckDB](https://duckdb.org/)) for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.

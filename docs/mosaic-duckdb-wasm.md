@@ -18,12 +18,12 @@ This reactivity can cause problems for code that depends on "side effects" that 
 Here is how we initialize [Mosaic's vgplot API](https://uwdata.github.io/mosaic/what-is-mosaic/) in the [Flight Delays](flight-delays) example:
 
 ```js run=false
-import { vgplot, url } from "./components/mosaic.js";
-const flights = FileAttachment("data/flights-200k.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("flights", url(flights)) ]);
+import { vgplot } from "./components/mosaic.js";
+const flights = await FileAttachment("data/flights-200k.parquet").url();
+const vg = vgplot(vg => [ vg.loadParquet("flights", flights) ]);
 ```
 
-We first import a custom `vgplot` initialization method that configures Mosaic, loads data into DuckDB, and returns the vgplot API. We also import a custom `url` method which we will later use to to prepare URLs that will be loaded by DuckDB.
+We first import a custom `vgplot` initialization method that configures Mosaic, loads data into DuckDB, and returns the vgplot API.
 
 Next, we reference the data files we plan to load.
 As Observable Framework needs to track which files are used, we _must_ use its `FileAttachment` mechanism.
@@ -31,17 +31,6 @@ However, we don't actually want to load the file yet, so we instead retrieve a c
 
 Finally, we invoke `vgplot(...)` to initialize Mosaic, which returns a (Promise to an) instance of the vgplot API.
 This method takes a single function as input, which should return an array of SQL queries to execute for client-side data loading.
-
-We use the `url()` helper method to prepare a file URL so that DuckDB can successfully load it.
-The url string returned by `FileAttachment(...).url()` is a _relative_ path like `./_file/data/doodads.csv`.
-DuckDB will mistakenly interpret this as a file system path rather than a web URL.
-The `url()` helper produces a full URL (with `https://`, hostname, etc.), based on the location of the current page:
-
-```js run=false
-export function url(file) {
-  return `${new URL(file, window.location)}`;
-}
-```
 
 The `vg` argument to the data loader callback is exactly the same API instance that is ultimately returned by `vgplot`.
 Perhaps this feels a bit circular, with `vg` provided to a callback, with the ultimate result being a reference to `vg`.

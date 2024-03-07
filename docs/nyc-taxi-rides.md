@@ -7,9 +7,9 @@ header: |
 ---
 
 ```js
-import { vgplot, url } from "./components/mosaic.js";
+import { vgplot } from "./components/mosaic.js";
 const trips = await FileAttachment("data/nyc-taxi.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("trips", url(trips)) ]);
+const vg = vgplot(vg => [ vg.loadParquet("trips", trips) ]);
 ```
 
 # NYC Taxi Rides

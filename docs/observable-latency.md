@@ -7,9 +7,9 @@ header: |
 ---
 
 ```js
-import { vgplot, url } from "./components/mosaic.js";
+import { vgplot } from "./components/mosaic.js";
 const latency = await FileAttachment("data/observable-latency.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("latency", url(latency)) ]);
+const vg = vgplot(vg => [ vg.loadParquet("latency", latency) ]);
 ```
 
 # Observable Web Latency
