@@ -7,9 +7,9 @@ header: |
 ---
 
 ```js
-import { vgplot, url } from "./components/mosaic.js";
+import { vgplot } from "./components/mosaic.js";
 const gaia = await FileAttachment("data/gaia.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("gaia", url(gaia)) ]);
+const vg = vgplot(vg => [ vg.loadParquet("gaia", gaia) ]);
 ```
 
 # Gaia Star Catalog

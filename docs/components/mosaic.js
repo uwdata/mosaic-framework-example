@@ -9,7 +9,3 @@ export async function vgplot(queries) {
   }
   return api;
 }
-
-export function url(file) {
-  return `${new URL(file, window.location)}`;
-}

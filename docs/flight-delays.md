@@ -7,9 +7,9 @@ header: |
 ---
 
 ```js
-import { vgplot, url } from "./components/mosaic.js";
+import { vgplot } from "./components/mosaic.js";
 const flights = await FileAttachment("data/flights-200k.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("flights", url(flights)) ]);
+const vg = vgplot(vg => [ vg.loadParquet("flights", flights) ]);
 ```
 
 # Flight Delays

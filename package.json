@@ -10,9 +10,9 @@
     "observable": "observable"
   },
   "dependencies": {
-    "@observablehq/framework": "latest"
+    "@observablehq/framework": "^1.2.0"
   },
   "engines": {
-    "node": ">=20.6"
+    "node": ">=18"
   }
 }
