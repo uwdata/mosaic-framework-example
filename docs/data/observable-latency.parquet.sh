@@ -1,1 +1,1 @@
-curl https://uwdata.github.io/mosaic-datasets/data/observable-latency.parquet
+curl https://idl.uw.edu/mosaic-datasets/data/observable-latency.parquet

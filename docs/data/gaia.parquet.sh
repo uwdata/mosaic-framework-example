@@ -12,7 +12,7 @@ WITH prep AS (
     t^2 AS t2,
     t2^3 AS t6,
     *
-  FROM 'https://uwdata.github.io/mosaic-datasets/data/gaia-5m.parquet'
+  FROM 'https://idl.uw.edu/mosaic-datasets/data/gaia-5m.parquet'
 )
 SELECT
   (

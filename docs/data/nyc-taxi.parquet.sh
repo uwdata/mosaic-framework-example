@@ -11,7 +11,7 @@ CREATE TEMP TABLE rides AS SELECT
   pickup_datetime::TIMESTAMP AS datetime,
   ST_Transform(ST_Point(pickup_latitude, pickup_longitude), 'EPSG:4326', 'ESRI:102718') AS pick,
   ST_Transform(ST_Point(dropoff_latitude, dropoff_longitude), 'EPSG:4326', 'ESRI:102718') AS drop
-FROM 'https://uwdata.github.io/mosaic-datasets/data/nyc-rides-2010.parquet';
+FROM 'https://idl.uw.edu/mosaic-datasets/data/nyc-rides-2010.parquet';
 
 -- Write output parquet file
 COPY (SELECT

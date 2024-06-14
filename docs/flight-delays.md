@@ -4,20 +4,16 @@ header: |
   <div class="banner">
     <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/flight-delays.md?plain=1"><span>View source ↗</span></a>
   </div>
+sql:
+  flights: data/flights-200k.parquet
 ---
-
-```js
-import { vgplot } from "./components/mosaic.js";
-const flights = await FileAttachment("data/flights-200k.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("flights", flights) ]);
-```
 
 # Flight Delays
 ## Interactive exploration of large-scale transportation data
 
 What contributes to delayed airline flights? Let's examine a sample of over 200,000 flight records provided by the [U.S. DOT Bureau of Transportation Statistics](https://www.transtats.bts.gov/ontime/).
 
-We use [Mosaic vgplot](https://uwdata.github.io/mosaic/) to create scalable, interactive visualizations. Mosaic loads data from a Parquet file into DuckDB-WASM, running in the browser. Mosaic queries the database to transform data as part of the visualization process.
+We use [Mosaic vgplot](https://idl.uw.edu/mosaic/) to create scalable, interactive visualizations. Mosaic loads data from a Parquet file into DuckDB-WASM, running in the browser. Mosaic queries the database to transform data as part of the visualization process.
 
 ## Cross-Filtered Histograms
 
@@ -75,7 +71,7 @@ vg.vconcat(
 
 When a selection changes, we need to filter the data and recount the number of records in each bin. The Mosaic system analyzes these queries and automatically optimizes updates by building indexes of pre-aggregated data ("data cubes") in the database, binned at the level of input pixels for the currently active view.
 
-While 200,000 points will stress many web-based visualization tools, Mosaic doesn't break a sweat. Now go ahead and try this with [10 million records](https://uwdata.github.io/mosaic/examples/flights-10m.html)!
+While 200,000 points will stress many web-based visualization tools, Mosaic doesn't break a sweat. Now go ahead and try this with [10 million records](https://idl.uw.edu/mosaic/examples/flights-10m.html)!
 
 
 ## Density Hexbins

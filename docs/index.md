@@ -4,18 +4,14 @@ header: |
   <div class="banner">
     <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/index.md?plain=1"><span>View source ↗</span></a>
   </div>
+sql:
+  weather: data/seattle-weather.parquet
 ---
 
 # Mosaic + Framework Examples
 ## Using Mosaic and DuckDB in Observable Framework
 
-```js
-import { vgplot } from "./components/mosaic.js";
-const weather = await FileAttachment("data/seattle-weather.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("weather", weather) ]);
-```
-
-[Mosaic](https://uwdata.github.io/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database ([DuckDB](https://duckdb.org/)) for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.
+[Mosaic](https://idl.uw.edu/mosaic) is a system for linking data visualizations, tables, and input widgets, all leveraging a database ([DuckDB](https://duckdb.org/)) for scalable processing. With Mosaic, you can interactively visualize and explore millions and even billions of data points.
 
 This site shows how to publish Mosaic and DuckDB-powered interactive dashboards and data-driven articles using [Observable Framework](https://observablehq.com/framework/). The examples illustrate:
 
@@ -54,6 +50,7 @@ vg.vconcat(
       vg.highlight({by: $range, fill: "#ccc", fillOpacity: 0.2}),
       vg.colorLegend({as: $click, columns: 1}),
       vg.xyDomain(vg.Fixed),
+      vg.xScale("utc"),
       vg.xTickFormat("%b"),
       vg.colorDomain($domain),
       vg.colorRange($colors),

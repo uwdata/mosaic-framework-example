@@ -10,7 +10,7 @@
     "observable": "observable"
   },
   "dependencies": {
-    "@observablehq/framework": "^1.2.0"
+    "@observablehq/framework": "^1.9.0"
   },
   "engines": {
     "node": ">=18"

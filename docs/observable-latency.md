@@ -4,13 +4,9 @@ header: |
   <div class="banner">
     <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/observable-latency.md?plain=1"><span>View source ↗</span></a>
   </div>
+sql:
+  latency: data/observable-latency.parquet
 ---
-
-```js
-import { vgplot } from "./components/mosaic.js";
-const latency = await FileAttachment("data/observable-latency.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("latency", latency) ]);
-```
 
 # Observable Web Latency
 ## Recreating a custom graphic using Mosaic vgplot
@@ -25,7 +21,7 @@ That said, a lot is going on in the original [custom heatmap component](https://
 - Observable Plot and HTML Canvas code are intermixed in non-trivial ways
 - Frame-based animation is used to progressively render the graphic, presumably to combat sluggish rendering
 
-Here we re-create this graphic with [Mosaic vgplot](https://uwdata.github.io/mosaic/what-is-mosaic/), resulting in a simpler, standalone specification.
+Here we re-create this graphic with [Mosaic vgplot](https://idl.uw.edu/mosaic/what-is-mosaic/), resulting in a simpler, standalone specification.
 We further leverage Mosaic's support for cross-chart linking and scalable filtering for real-time updates.
 
 ```js

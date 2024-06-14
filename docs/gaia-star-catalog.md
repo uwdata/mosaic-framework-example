@@ -4,13 +4,9 @@ header: |
   <div class="banner">
     <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/gaia-star-catalog.md?plain=1"><span>View source ↗</span></a>
   </div>
+sql:
+  gaia: data/gaia.parquet
 ---
-
-```js
-import { vgplot } from "./components/mosaic.js";
-const gaia = await FileAttachment("data/gaia.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("gaia", gaia) ]);
-```
 
 # Gaia Star Catalog
 ## Explore a 5M record sample of the 1.8B star catalog

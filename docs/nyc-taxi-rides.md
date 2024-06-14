@@ -4,13 +4,9 @@ header: |
   <div class="banner">
     <a target="_blank" href="https://github.com/uwdata/mosaic-framework-example/blob/main/docs/nyc-taxi-rides.md?plain=1"><span>View source ↗</span></a>
   </div>
+sql:
+  trips: data/nyc-taxi.parquet
 ---
-
-```js
-import { vgplot } from "./components/mosaic.js";
-const trips = await FileAttachment("data/nyc-taxi.parquet").url();
-const vg = vgplot(vg => [ vg.loadParquet("trips", trips) ]);
-```
 
 # NYC Taxi Rides
 ## Pickup and dropoff points for 1M NYC taxi rides on Jan 1-3, 2010.
@@ -22,6 +18,7 @@ _Please wait a few seconds for the dataset to load._
 
 ```js
 const $filter = vg.Selection.crossfilter();
+
 const defaultAttributes = [
   vg.width(335),
   vg.height(550),
@@ -38,10 +35,10 @@ const defaultAttributes = [
 vg.hconcat(
   vg.plot(
     vg.raster(
-      vg.from("trips", {filterBy: $filter}),
+      vg.from("trips", { filterBy: $filter }),
       { x: "px", y: "py", imageRendering: "pixelated" }
     ),
-    vg.intervalXY({as: $filter}),
+    vg.intervalXY({ as: $filter }),
     vg.text(
       [{label: "Taxi Pickups"}],
       {
@@ -54,15 +51,15 @@ vg.hconcat(
       }
     ),
     ...defaultAttributes,
-    vg.colorScheme("blues")
+    vg.colorScheme("turbo")
   ),
   vg.hspace(10),
   vg.plot(
     vg.raster(
-      vg.from("trips", {filterBy: $filter}),
+      vg.from("trips", { filterBy: $filter }),
       { x: "dx", y: "dy", imageRendering: "pixelated" }
     ),
-    vg.intervalXY({as: $filter}),
+    vg.intervalXY({ as: $filter }),
     vg.text(
       [{label: "Taxi Dropoffs"}],
       {
@@ -75,7 +72,7 @@ vg.hconcat(
       }
     ),
     ...defaultAttributes,
-    vg.colorScheme("oranges")
+    vg.colorScheme("turbo")
   )
 )
 ```
@@ -84,12 +81,12 @@ vg.hconcat(
 vg.plot(
   vg.rectY(
     vg.from("trips"),
-    { x: vg.bin("time"), y: vg.count(), fill: "steelblue", inset: 0.5 }
+    { x: vg.bin("time"), y: vg.count(), inset: 0.5 }
   ),
   vg.intervalX({ as: $filter }),
-  vg.yTickFormat('s'),
-  vg.xLabel('Pickup Hour'),
-  vg.yLabel('Number of Rides'),
+  vg.yTickFormat("s"),
+  vg.xLabel("Pickup Hour"),
+  vg.yLabel("Number of Rides"),
   vg.width(680),
   vg.height(100)
 )
