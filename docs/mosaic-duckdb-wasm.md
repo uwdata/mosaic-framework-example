@@ -14,7 +14,7 @@ Observable uses dependencies among code blocks, rather than the order within the
 This reactivity can cause problems for code that depends on "side effects" that are not tracked by Observable's runtime.
 
 In the past, we had to carefully work our way around these side effects when manually loading data and initializing Mosaic.
-Fortunately, as of version 1.3.0 onward, Observable Framework includes built-in [DuckDB data loading](https://observablehq.com/framework/sql) and [Mosaic initialization](https://observablehq.com/framework/lib/mosaic) support to hande this for us.
+Fortunately, as of version 1.3.0 onward, Observable Framework includes built-in [DuckDB data loading](https://observablehq.com/framework/sql) and [Mosaic initialization](https://observablehq.com/framework/lib/mosaic) support to handle this for us.
 
 ## Loading Data into DuckDB-WASM
 
